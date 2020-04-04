@@ -1,0 +1,78 @@
+#include <iostream>
+#include<string>
+using namespace std;
+
+int globVar = 100;
+
+
+void func1(){              //Using global variable instead of parameter (not best idea)
+     globVar = 1;
+ }
+ 
+ 
+int func2(int num){        //Using value parameter (does not change outside fx)
+    num = 10;
+    return num;
+}
+
+
+void func3(float &num){    //using reference parameter (points to address &var)
+    num = 1.234;
+}
+
+
+void func4(int *num){      //*dereference operator to get value at the address
+    if (*num != 12345) *num = 12345;
+    else *num = 54321;
+}
+
+
+void func5(char myStr[]){  //Passing an array to a function (automatically as pointer)
+    myStr[0] = 'N';
+    myStr[1] = 'a';
+    myStr[2] = 'e';
+    myStr[3] = 'J';
+}
+
+
+int main()
+{
+    int x = 5;
+    float y = 4.0011;
+    char name[] = {"Jean"};
+    cout<<"x = "<<x<<"\ty = "<<y<<"\tglobal var = "<<globVar<<endl;
+    cout<<"Name = "<<name<<endl;
+    
+    
+    //Function using global parameter - seen as bad idea
+    func1();
+    cout<<"Global variable: "<<globVar<<endl;
+    
+    
+    //Function using value parameter
+    int a = func2(x); //change value in functions
+    cout<<"a = "<<a<<" and x = "<<x<<endl;
+    
+    
+    //Function using reference parameter (1)
+    func3(y);
+    cout<<"float: "<<y<<endl;
+    
+    
+    //Function using reference parameter (pointer variable)
+    int *pX = &x;  //declaring pointer variable pointing to address of x 
+    func4(pX);
+    cout<<"x = "<<x<<endl;
+    
+    
+    //Can also use pointer without declaring pointer variable
+    func4(&x);
+    cout<<"x = "<<x<<endl;
+    
+    
+    //Arrays automatically decays to a pointer (does not pass by value)
+    func5(name);
+    cout<<"Name: "<<name<<endl;
+
+    return 0;
+}
